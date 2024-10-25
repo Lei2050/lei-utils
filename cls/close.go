@@ -33,9 +33,14 @@ func (c *CloseUtil) C() <-chan struct{} {
 	return c.closeChan
 }
 
-func (c *CloseUtil) Close() {
+func (c *CloseUtil) Close(cb func()) {
 	c.once.Do(func() {
 		close(c.closeChan)
+
+		if cb != nil {
+			cb()
+		}
+
 		for _, f := range c.closeCb {
 			f()
 		}
