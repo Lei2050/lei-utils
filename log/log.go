@@ -4,6 +4,15 @@ import (
 	logrus "github.com/sirupsen/logrus"
 )
 
+func SetLevel(lvl string) {
+	lv, err := logrus.ParseLevel(lvl)
+	if err != nil {
+		Error(err.Error())
+		return
+	}
+	logrus.SetLevel(lv)
+}
+
 func Trace(args ...any) {
 	logrus.Trace(args...)
 }
