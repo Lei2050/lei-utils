@@ -38,11 +38,11 @@ func (h *HttpRequestRoutine) Run() {
 func (h *HttpRequestRoutine) SendHttpRequest(request *wrproxy.HttpRequest) {
 	httClient := http.Client{Timeout: 10 * time.Second}
 	httpRsp := &wrproxy.HttpResponse{Resp: nil, Ret: wrproxy.ErrInvalidHttpMethod, Handler: request.Handler}
-	if request.Method == wrproxy.HTTP_METHOD_GET {
+	if request.Method == wrproxy.HttpMethodGet {
 		httpRsp.Resp, httpRsp.Ret = httClient.Get(request.Url)
-	} else if request.Method == wrproxy.HTTP_METHOD_POST {
+	} else if request.Method == wrproxy.HttpMethodPost {
 		httpRsp.Resp, httpRsp.Ret = httClient.PostForm(request.Url, request.Param)
-	} else if request.Method == wrproxy.HTTP_METHOD_POSTJSON {
+	} else if request.Method == wrproxy.HttpMethodPostJson {
 		content := request.Param.Get("json")
 		httpRsp.Resp, httpRsp.Ret = httClient.Post(request.Url, "application/json", bytes.NewBuffer([]byte(content)))
 	}
